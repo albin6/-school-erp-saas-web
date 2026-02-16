@@ -23,6 +23,12 @@ export const getSubdomain = (): string | null => {
     if (parts.length > rootParts.length) {
         // Return the first part as subdomain
         // This assumes single-level subdomains for now
+
+        // Ignore 'www' if it's the extra part (standard convention)
+        if (parts[0] === 'www') {
+            return null;
+        }
+
         return parts[0];
     }
 
