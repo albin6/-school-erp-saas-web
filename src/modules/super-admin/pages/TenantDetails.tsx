@@ -7,6 +7,7 @@ import { BranchList } from '../components/BranchList';
 import { TenantUserList } from '../components/TenantUserList';
 import { EditTenantModal } from '../components/EditTenantModal';
 import type { Tenant } from '../types/tenant.types';
+import { config } from '@/config';
 
 
 export const TenantDetails = () => {
@@ -93,9 +94,10 @@ export const TenantDetails = () => {
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Subdomain">
                                         <code className="bg-gray-100 px-2 py-1 rounded">
-                                            {tenant.subdomain}.localhost:5173
+                                            {tenant.subdomain}.{config.ROOT_DOMAIN}
                                         </code>
                                     </Descriptions.Item>
+
                                     <Descriptions.Item label="Custom Domain">
                                         {tenant.domain || '-'}
                                     </Descriptions.Item>

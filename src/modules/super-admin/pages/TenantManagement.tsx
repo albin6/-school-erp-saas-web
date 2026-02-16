@@ -8,6 +8,7 @@ import { EditTenantModal } from '../components/EditTenantModal';
 import { tenantService } from '../services/tenant.service';
 import type { Tenant } from '../types/tenant.types';
 import { useNavigate } from 'react-router-dom';
+import { config } from '@/config';
 
 export const TenantManagement = () => {
     const navigate = useNavigate();
@@ -119,7 +120,7 @@ export const TenantManagement = () => {
             key: 'subdomain',
             render: (subdomain: string) => (
                 <code className="bg-gray-100 px-2 py-1 rounded text-sm">
-                    {subdomain}.localhost:5173
+                    {subdomain}.{config.ROOT_DOMAIN}
                 </code>
             ),
         },
