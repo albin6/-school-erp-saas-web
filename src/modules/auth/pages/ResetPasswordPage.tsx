@@ -76,13 +76,24 @@ export const ResetPasswordPage: React.FC = () => {
             });
 
             if (response.data.status === 'success') {
-                messageApi.success('Password reset successfully! Redirecting to login...');
+                messageApi.success('Password reset successfully! Redirecting...');
+
+                const { role, branch_slug } = response.data.data || {};
+                const tenantSubdomain = getTenantSubdomain();
 
                 setTimeout(() => {
                     if (isSuperAdminDomain()) {
                         navigate('/login');
-                    } else if (getTenantSubdomain()) {
-                        navigate('/admin');
+                    } else if (tenantSubdomain) {
+                        const targetSlug = branch_slug || tenantSubdomain;
+
+                        if (role === 'STUDENT') {
+                            navigate(`/${targetSlug}`); // Student portal entry
+                        } else if (role === 'STAFF') {
+                            navigate(`/${targetSlug}/staff`); // Staff portal entry
+                        } else {
+                            navigate('/admin'); // Fallback to admin/default
+                        }
                     } else {
                         navigate('/login');
                     }
