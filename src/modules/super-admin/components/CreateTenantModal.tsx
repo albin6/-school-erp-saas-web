@@ -2,6 +2,7 @@ import { Modal, Form, Input, message } from 'antd';
 import { useState, useRef } from 'react';
 import { tenantService } from '../services/tenant.service';
 import type { CreateTenantDTO } from '../types/tenant.types';
+import { config } from '@/config';
 
 interface CreateTenantModalProps {
     open: boolean;
@@ -37,7 +38,7 @@ export const CreateTenantModal = ({ open, onClose, onSuccess }: CreateTenantModa
     const checkSubdomain = async (_: any, value: string) => {
         if (!value || value.length < 3) return Promise.resolve();
 
-        
+
         return new Promise((resolve, reject) => {
             if (debounceRef.current) {
                 clearTimeout(debounceRef.current);
@@ -52,11 +53,11 @@ export const CreateTenantModal = ({ open, onClose, onSuccess }: CreateTenantModa
                         reject(new Error('Subdomain is already taken'));
                     }
                 } catch (error) {
-                    
+
                     console.error('Check failed', error);
-                    resolve(null); 
+                    resolve(null);
                 }
-            }, 500); 
+            }, 500);
         });
     };
 
@@ -100,10 +101,11 @@ export const CreateTenantModal = ({ open, onClose, onSuccess }: CreateTenantModa
                         },
                         { validator: checkSubdomain }
                     ]}
-                    extra="This will be used as: subdomain.localhost:5173"
+                    extra={`This will be used as: subdomain.${config.ROOT_DOMAIN}`}
                 >
                     <Input placeholder="e.g., greenwood" />
                 </Form.Item>
+
 
                 <Form.Item
                     label="Admin Email"
@@ -123,7 +125,7 @@ export const CreateTenantModal = ({ open, onClose, onSuccess }: CreateTenantModa
                 >
                     <Input placeholder="e.g., greenwood.edu" />
                 </Form.Item>
-            </Form>
-        </Modal>
+            </Form >
+        </Modal >
     );
 };
